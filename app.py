@@ -40,7 +40,12 @@ def contrast():
 
     # Load the image and apply contrast enhancement
     img = Image.open(file)
+    brightness = request.form.get('brightness', type=float)
     contrasted_img = ImageEnhance.Contrast(img).enhance(contrast)
+    if brightness is not None:
+        contrasted_img = adjust_brightness(img, brightness)
+
+
     
 
     # Calculate color distributions of original and contrasted images
@@ -89,6 +94,19 @@ def get_color_distribution(img):
     colors = img.getcolors(img.size[0] * img.size[1])
     return sorted(colors, key=lambda x: x[0], reverse=True)[:10]
 
+def adjust_brightness(image, brightness):
+    img_arr = np.array(image)
+
+    # Scale the pixel values by the brightness factor
+    img_arr = img_arr * brightness
+
+    # Clip the pixel values to the range [0, 255]
+    img_arr = np.clip(img_arr, 0, 255)
+
+    # Convert the numpy array back to a PIL Image object
+    new_img = Image.fromarray(img_arr.astype('uint8'), 'RGB')
+
+    return new_img
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
