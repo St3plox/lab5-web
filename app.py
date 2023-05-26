@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, abort, send_from_directory
+import base64
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from PIL import Image, ImageEnhance
 import requests
-import os
-import base64
+from PIL import Image, ImageEnhance
+from flask import Flask, render_template, request, abort, send_from_directory
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024  # 1 MB limit for uploaded files

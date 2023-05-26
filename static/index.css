@@ -1,0 +1,9 @@
+center{
+    background-color:grey;
+    height: 460px;
+    alignment:center;
+    border-radius: 20px;
+}
+.contrast{
+ color:red;
+}
